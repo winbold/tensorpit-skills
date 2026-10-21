@@ -1,0 +1,19 @@
+{
+  "name": "tensorpit",
+  "version": "7.0.0",
+  "description": "Write a research report TensorPit can compile into a trading campaign, compile it with you, and simulate it — two skills and TensorPit's two MCP servers, the compiler and the runner.",
+  "author": {
+    "name": "Winbold Data Systems",
+    "url": "https://github.com/winbold"
+  },
+  "homepage": "https://github.com/winbold/tensorpit-skills",
+  "repository": "https://github.com/winbold/tensorpit-skills",
+  "keywords": [
+    "tensorpit",
+    "trading",
+    "research",
+    "mcp",
+    "prostocks"
+  ],
+  "license": "SEE LICENSE IN LICENSE"
+}

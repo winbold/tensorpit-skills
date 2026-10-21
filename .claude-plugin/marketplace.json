@@ -1,0 +1,17 @@
+{
+  "name": "tensorpit-skills",
+  "owner": {
+    "name": "Winbold Data Systems",
+    "url": "https://github.com/winbold"
+  },
+  "metadata": {
+    "description": "TensorPit's report-writing skills and its compiler and runner MCP servers, for Claude."
+  },
+  "plugins": [
+    {
+      "name": "tensorpit",
+      "source": "./plugins/tensorpit",
+      "description": "TensorPit's report-writing skills and its compiler and runner MCP servers."
+    }
+  ]
+}
