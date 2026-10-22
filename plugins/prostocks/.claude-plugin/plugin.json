@@ -1,0 +1,19 @@
+{
+  "name": "prostocks",
+  "version": "7.0.0",
+  "description": "Write a research report ProStocks can compile into a trading campaign, compile it with you, and simulate it — two skills and one MCP server, carrying TensorPit's compiler and its runner.",
+  "author": {
+    "name": "Winbold Data Systems",
+    "url": "https://github.com/winbold"
+  },
+  "homepage": "https://github.com/winbold/prostocks-skills",
+  "repository": "https://github.com/winbold/prostocks-skills",
+  "keywords": [
+    "prostocks",
+    "tensorpit",
+    "trading",
+    "research",
+    "mcp"
+  ],
+  "license": "SEE LICENSE IN LICENSE"
+}

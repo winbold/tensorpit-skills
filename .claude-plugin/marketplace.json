@@ -1,17 +1,17 @@
 {
-  "name": "tensorpit-skills",
+  "name": "prostocks-skills",
   "owner": {
     "name": "Winbold Data Systems",
     "url": "https://github.com/winbold"
   },
   "metadata": {
-    "description": "TensorPit's report-writing skills and its compiler and runner MCP servers, for Claude."
+    "description": "ProStocks' report-writing skills and its MCP server, for Claude."
   },
   "plugins": [
     {
-      "name": "tensorpit",
-      "source": "./plugins/tensorpit",
-      "description": "TensorPit's report-writing skills and its compiler and runner MCP servers."
+      "name": "prostocks",
+      "source": "./plugins/prostocks",
+      "description": "ProStocks' report-writing skills and its MCP server, carrying TensorPit's compiler and its runner."
     }
   ]
 }

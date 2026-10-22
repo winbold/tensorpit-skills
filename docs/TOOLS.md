@@ -1,7 +1,11 @@
 # TensorPit's MCP tools
 
-Every tool TensorPit's two servers offer, what it takes and what it answers. The workflows these
+Every tool TensorPit offers over MCP, what it takes and what it answers. The workflows these
 belong to are in [INTEGRATION.md](INTEGRATION.md).
+
+TensorPit has two components, and three addresses: one for each component, and one carrying both.
+Which address you call changes nothing about what you may reach — ⛔ **your credential's SCOPE
+decides that**, and a tool it cannot use is not registered at all.
 
 Read this table as a map, not as a contract on *availability*: ⛔ **a tool you cannot use is not
 registered**, so what `tools/list` gives your credential is the truth. A missing tool is an answer.
@@ -55,6 +59,18 @@ none of it.
 | `get_trading_session` | `session_id` | the session: status, symbols, cash, positions, unrealised P&L, why it failed | read · consumer · flag |
 
 ⛔ **Stopping a live session is not here.** It stays in the TensorPit webapp, with the account owner.
+
+---
+
+## Both together · `/api/v1/mcp`
+
+The universal address: every tool above, on one connection. This is the address a PERSON is given,
+because adding one connector is simpler than adding two.
+
+⛔ It grants nothing extra. A `reports` key calling here lists the compiler's tools and no simulation
+or trading tool — the same list it gets on `/api/v1/mcp/compiler`. Use a component's own address
+when you want a connector you can revoke on its own: a token is bound to the address it was minted
+for, so the three are three separate grants.
 
 ---
 

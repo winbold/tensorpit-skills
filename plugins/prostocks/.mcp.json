@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "prostocks": {
+      "type": "http",
+      "url": "https://tp-dev.winbold.net/api/v1/mcp"
+    }
+  }
+}
