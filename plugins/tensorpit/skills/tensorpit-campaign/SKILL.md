@@ -42,7 +42,7 @@ Five things to hold on to before anything else:
 TensorPit is TWO MCP connectors: its **compiler** (`/api/v1/mcp/compiler` — you have it if you can
 see `get_strategy_instructions`, `submit_report`, `get_compilation`, `revise_report` and
 `finalize_report`) and its **runner** (`/api/v1/mcp/runner` — `get_runner_capabilities`,
-`propose_simulation_paths`, `run_simulation`, `get_simulation`, `list_simulations`).
+`propose_simulation_paths`, `run_simulation`, `watch_simulation`, `get_simulation`, `list_simulations`).
 
 - **Not connected?** Read `references/connect.md` and walk the user through it — claude.ai and
   Cowork add each as a custom connector, Claude Desktop and Claude Code take a URL and a key.
@@ -214,8 +214,13 @@ futures its own scenarios make probable, rendered on the real calendar and the n
 3. `run_simulation { strategy_id, cash, path_ids }` — it answers at once with a `simulation_id`.
    Say it is running: each path is first tuned with no model call until the campaign's own scenario
    tracking recognises it, then traded by the campaign's own Campaign Manager — a few minutes a path.
-4. `get_simulation { simulation_id }` every half minute or so, until it is `done` (each path with
-   its result) or `failed` (with why).
+4. `watch_simulation { simulation_id, cursor, wait_ms: 20000 }` in a loop, passing back the `cursor`
+   it answers with. It HOLDS the call until the next step happens, so each answer is news: the future
+   started, each tuning run and whether the campaign recognised it, the real run, a heartbeat while a
+   step is in flight, the outcome. **Tell the user what it is doing as it goes** — a future takes
+   minutes, and silence reads as a hang. Stop when the `view.status` is no longer `running` and `more`
+   is false. (`get_simulation { simulation_id }` is the same view without the events, for a one-off
+   read; `list_simulations { strategy_id }` lists that campaign's.)
 
 The campaign is also on its page in TensorPit (`<base>/strategies/campaigns/<slug>`), where
 **Simulate** runs it the same way.
@@ -228,10 +233,22 @@ the way the report means, not whether the idea is right.
 
 ## 6 · Bring the results back, and ask what to do with them
 
-When `get_simulation` says `done`, read it with them, path by path: did the campaign **engage**,
-its fills, its return and worst drawdown, **whether the stop held**, and its decisions (when, what,
-why). Then the return weighted by the report's own odds — as a check on the machinery, never a
-forecast. Then **put the fork to the user** with `AskUserQuestion`:
+⛔ **One simulated path is one POSSIBLE FUTURE, and the whole campaign was run against it.** Report
+every future, never a summary that hides one — and lead with what HAPPENS in it (`story`), not the
+report's thesis it came from (`scenario`, `trajectory`: provenance, said after).
+
+For each future, in this order: did the campaign **recognise** it (`recognised`, and `tuning` says at
+which strength, after how many runs — `recognised: false` is a finding about the REPORT: its gates do
+not fire on its own scenario); did it **enter** (`result.engaged`, `fills`); and what came of it
+(`totalReturnPct`, `realizedPnL` in money, `maxDrawdownPct`, **whether the stop held**), then its
+`decisions` (when, what, why). `totals` gives the run at a glance — how many finished, were
+recognised, traded, the fills and the realised money — and `expected_return_pct` the return weighted
+by the report's own odds, as a check on the machinery, never a forecast.
+
+⚠️ **A future the campaign never entered is not a 0% result.** Say "it never entered", never "it
+made nothing": they mean different things, and only the first is a finding.
+
+Then **put the fork to the user** with `AskUserQuestion`:
 
 - **Rework the idea** — they have seen how it behaved and want to change something: an entry that
   came too late, a stop that let a gap through, a horizon that ran out before the move, options they
