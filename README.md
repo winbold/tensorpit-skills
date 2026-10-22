@@ -13,6 +13,8 @@ compiles. It is **generated from TensorPit** — do not edit it here.
 | **`tensorpit-campaign`** — from a trade idea in a conversation to a compiled, simulated campaign, with the person deciding every default | [`plugins/tensorpit/skills/tensorpit-campaign/`](plugins/tensorpit/skills/tensorpit-campaign/) |
 | **Connecting Claude** to TensorPit's two MCP servers | [`plugins/tensorpit/skills/tensorpit-campaign/references/connect.md`](plugins/tensorpit/skills/tensorpit-campaign/references/connect.md) |
 | **The discipline** both skills write to (TensorPit also serves it as `get_strategy_instructions`) | [`docs/STRATEGY-INSTRUCTIONS.md`](docs/STRATEGY-INSTRUCTIONS.md) |
+| **Integrating** — how a program drives TensorPit: the report loop, the confirmation gate, simulation, live trading, the runner, REST, refusals, and running it locally | [`docs/INTEGRATION.md`](docs/INTEGRATION.md) |
+| **Every MCP tool**, what it takes and what it answers | [`docs/TOOLS.md`](docs/TOOLS.md) |
 
 ## Claude Code
 
@@ -36,6 +38,30 @@ Add this repository as a plugin marketplace (**Customize → Plugins → Add →
 on the plugin's Connectors tab — connect each once. Or add the two servers yourself as custom
 connectors (one for `https://tp-dev.winbold.net/api/v1/mcp/compiler`, one for `https://tp-dev.winbold.net/api/v1/mcp/runner`) and
 upload a skill folder as a skill. The connect guide has every step.
+
+## Writing your own integration
+
+You do not need Claude. Both servers are plain MCP over HTTP, and the same work answers on REST —
+[`docs/INTEGRATION.md`](docs/INTEGRATION.md) is the guide, [`docs/TOOLS.md`](docs/TOOLS.md) the
+reference. The short version:
+
+1. Mint a key in the TensorPit webapp. A `reports` key reaches the compiler only; the runner needs a
+   full key.
+2. `get_strategy_instructions` → write the report → `submit_report` → poll `get_compilation` (or hold
+   `watch_compilation` open).
+3. Fix what it asks: `revise_report`, `refine_report`, or `answer_questions` in the person's words.
+4. ⛔ A compile that passes seals **nothing**: a person accepts the reading with `confirm_reading`
+   (a service key's is accepted automatically). `finalize_report` then freezes the text.
+5. Simulate on the runner — `propose_simulation_paths` → the person picks the paths and the capital →
+   `run_simulation` → `watch_simulation`. It tests the machinery, never the edge.
+6. Trading, where the deployment turned it on, is two calls with the person's yes between them — and
+   stopping a session stays in the TensorPit webapp.
+
+⛔ Read `tools/list`: a tool your credential cannot use is **not registered**, which is the answer.
+
+To run TensorPit on your own machine while you build against it — no sign-in, no database server, no
+Redis — follow [§9 of the integration guide](docs/INTEGRATION.md#9--running-tensorpit-on-your-own-machine):
+the `.env` it needs, what each line is for, and what each missing piece looks like.
 
 ## ProStocks
 
