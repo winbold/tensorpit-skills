@@ -23,7 +23,7 @@ document spells them.
 
 This document is the whole job. You do not need TensorPit's schema, its JSON, or any of its
 tooling: those are the compiler's business. TensorPit owns this skill (2026-10-21); it is published
-with its version at `github.com/winbold/tensorpit-skills`.
+with its version at `github.com/winbold/prostocks-skills`.
 
 ---
 

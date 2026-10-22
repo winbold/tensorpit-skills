@@ -13,7 +13,8 @@ own machine while you build a client against it, see [§9](#9--running-tensorpit
 
 ## 1 · The shape of it
 
-TensorPit is **two MCP servers**, and a REST API that does the same work.
+TensorPit is **two components over MCP** — reachable on one address or on one each — and a REST
+API that does the same work.
 
 | | path | what it owns |
 |---|---|---|
