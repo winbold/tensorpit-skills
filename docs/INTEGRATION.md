@@ -3,7 +3,7 @@
 **For developers.** This is how a program drives TensorPit: how a research report becomes a sealed
 campaign, how a campaign is simulated, and how — where the deployment allows it — a person starts it
 trading. If you are connecting Claude rather than writing code, read
-[connect.md](../plugins/tensorpit/skills/tensorpit-campaign/references/connect.md) instead; if you are
+[connect.md](../plugins/prostocks/skills/prostocks-campaign/references/connect.md) instead; if you are
 writing the report itself, read [STRATEGY-INSTRUCTIONS.md](STRATEGY-INSTRUCTIONS.md).
 
 Every tool named here is listed with its arguments in [TOOLS.md](TOOLS.md). To run TensorPit on your
@@ -19,6 +19,10 @@ TensorPit is **two MCP servers**, and a REST API that does the same work.
 |---|---|---|
 | **compiler** | `/api/v1/mcp/compiler` | a report becomes a campaign: submit, correct, accept the reading, finalize |
 | **runner** | `/api/v1/mcp/runner` | a sealed campaign runs: simulate, and (where enabled) trade |
+| **both** | `/api/v1/mcp` | every tool above, on one connection — the address a person is given |
+
+⛔ The address is not the gate. What a credential may reach is its SCOPE (below), identical on all
+three; a token, though, is bound to the address it was minted for, so each is its own grant.
 
 Both are OAuth 2.1 protected resources with one authorization server in front of them. **Each is
 consented separately** — a token for one is not a token for the other.
@@ -507,7 +511,7 @@ minted one before, delete it in the webapp (**Settings → API Keys**).
 
 ### 6 · Check
 
-- Connect your client to `http://localhost:4317/api/v1/mcp/compiler` and `…/api/v1/mcp/runner` with **no
+- Connect your client to `http://localhost:4317/api/v1/mcp` (or a single component, `…/mcp/compiler` and `…/mcp/runner`) with **no
   credential**. TensorPit binds `127.0.0.1`; if `localhost` does not connect, use `127.0.0.1`.
 - `get_capabilities` and `get_runner_capabilities` both report `plugin.profile: "consumer"` and
   `simulate: true`.

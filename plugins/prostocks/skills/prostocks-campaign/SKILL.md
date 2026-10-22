@@ -1,6 +1,6 @@
 ---
-name: tensorpit-campaign
-description: Use when someone wants to trade an idea through TensorPit — they are discussing a stock they want to invest in, they have a trade idea or research note for one ticker, or they ask to revise, finalise, test or simulate one. Drives the whole path over TensorPit's two MCP connectors (its compiler and its runner) — write the report from the discussion, ask TensorPit what shape a report must take, rewrite it to that shape, submit it, work the compiler's corrections with the user deciding every default, simulate it on its probable futures and bring the result back, rework or finalise. Also use to resume a report already submitted, or when asked how to connect Claude to TensorPit. NOT for starting, stopping or sizing live trading — that stays the account owner's step in TensorPit.
+name: prostocks-campaign
+description: Use when someone wants to trade an idea through TensorPit — they are discussing a stock they want to invest in, they have a trade idea or research note for one ticker, or they ask to revise, finalise, test or simulate one. Drives the whole path over the ProStocks MCP connector, which carries TensorPit's compiler and its runner — write the report from the discussion, ask TensorPit what shape a report must take, rewrite it to that shape, submit it, work the compiler's corrections with the user deciding every default, simulate it on its probable futures and bring the result back, rework or finalise. Also use to resume a report already submitted, or when asked how to connect Claude to TensorPit. NOT for starting, stopping or sizing live trading — that stays the account owner's step in TensorPit.
 argument-hint: [ticker, or a path to the idea .md]
 ---
 

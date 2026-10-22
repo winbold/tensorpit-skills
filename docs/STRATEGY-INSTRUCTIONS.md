@@ -213,7 +213,7 @@ and the compiler is the strict step. They are the cheapest round you will ever s
 | | |
 |---|---|
 | `prostocks/SKILL.md` | the provider skill — self-contained: the discipline, the rules that decide whether a report compiles first time, a worked example, and the pre-flight checklist. A ProStocks agent needs this file and nothing else |
-| `claude/tensorpit-campaign/` | the Claude skill: the report loop on the MCP connector, step by step |
+| `claude/prostocks-campaign/` | the Claude skill: the report loop on the MCP connector, step by step |
 
 ⚠️ **The JSON is what a report BECOMES, not what you have to write by hand.** It is the
 compiler's output and the record kept beside the compiled plan. This document is the thing to
