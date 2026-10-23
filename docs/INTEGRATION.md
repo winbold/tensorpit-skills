@@ -22,8 +22,10 @@ API that does the same work.
 | **runner** | `/api/v1/mcp/runner` | a sealed campaign runs: simulate, and (where enabled) trade |
 | **both** | `/api/v1/mcp` | every tool above, on one connection — the address a person is given |
 
-⛔ The address is not the gate. What a credential may reach is its SCOPE (below), identical on all
-three; a token, though, is bound to the address it was minted for, so each is its own grant.
+⛔ The address is not the gate. What a credential may reach is its SCOPE (below); a token, though,
+is bound to the address it was minted for, so each is its own grant. `reports` reaches the report
+tools, `reports-simulate` those plus simulation, `full` everything. ⛔ Trading is never a narrow
+scope's, whatever the address.
 
 Both are OAuth 2.1 protected resources with one authorization server in front of them. **Each is
 consented separately** — a token for one is not a token for the other.
@@ -95,8 +97,16 @@ get_compilation / watch_compilation   ◀── poll or long-poll
       ├── awaiting_confirmation   the reading is ready — a person accepts it (confirm_reading)
       ├── accepted                the campaign is SEALED; it can be simulated
       ├── finalized               the report text is frozen
+      ├── cancelled               someone stopped it (cancel_compilation) — not an error
       └── failed                  the error is on the view
 ```
+
+⛔ **A compile can be stopped.** `cancel_compilation` (REST: `POST /api/v1/reports/{strategyId}/cancel`)
+ends one that is running, queued, or waiting on an answer nobody will give, and cuts the model call
+in flight so nothing further is spent. It is not a delete: the report and everything the compile
+learned are kept, and a later revision compiles it again. A compile that has already finished is
+not stopped — the refusal says what it is now, because answering "stopped" about a sealed campaign
+is something a caller would act on.
 
 ### Submitting
 

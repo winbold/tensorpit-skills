@@ -35,6 +35,7 @@ A report becomes a sealed campaign here. Reachable by a `full` key and by a `rep
 | `revise_report` | `strategy_id`, `report`, `author?` | replaces the text under the same strategy and recompiles | writes |
 | `refine_report` | `strategy_id`, `instruction`, `author?` | files one instruction on top of the report — it supersedes the report, and earlier instructions, where they conflict | writes |
 | `confirm_reading` | `strategy_id`, `ast_digest` | accepts the reading and **seals the campaign**; a stale digest is refused (`reading_stale`) | writes · consumer |
+| `cancel_compilation` | `strategy_id` | stops a compile that is running, queued or waiting on an answer. The model call in flight is cut. Not a delete — the report is kept and a revision compiles it again | writes |
 | `finalize_report` | `strategy_id` | freezes the report text. The campaign was sealed at confirmation | writes |
 | `get_report` | `strategy_id` | the report as filed, with its revisions and refinements | read |
 | `list_reports` | `ticker?`, `status?` | your reports | read |

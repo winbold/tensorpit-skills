@@ -51,8 +51,10 @@ consent step is your API key.
 3. **Connect**. A consent page opens.
 4. Paste the `tp_…` key and press **Approve**. Claude is sent back and the connector goes green.
 
-⚠️ Simulation needs a **full** key. A `reports` key connects fine and gives you the whole report
-loop, but no simulation tool appears in the list.
+⚠️ Simulation needs a key whose scope allows it — `reports-simulate` or `full`. A plain `reports`
+key connects fine and gives you the whole report loop, but no simulation tool appears in the list.
+Where a provider's sign-in is the consent, the scope is the federation key's, so this is the
+administrator's setting rather than yours.
 
 A token is bound to the address it was minted for: a grant for `/api/v1/mcp` is not a grant for
 `/api/v1/mcp/compiler`, and the other way round.
@@ -122,6 +124,6 @@ split the argument on the space and the header arrives truncated. Restart Deskto
 | Connector was green, now every tool answers 401 | the API key that granted it was revoked, or the refresh token was replayed | reconnect: remove the connector and add it again |
 | "Unknown application" on the consent page | the registration was dropped (a reset database) | remove the connector in Claude and add it again |
 | Tools missing in Claude Code after `mcp add` | wrong transport | it is `--transport http`, not sse |
-| Only report tools appear; no simulation | the key's scope is `reports` | mint a **full** key — the address does not change what a scope allows |
+| Only report tools appear; no simulation | the key's scope is `reports` | it needs `reports-simulate` (or `full`) — the address never changes what a scope allows |
 | 401 on `mcp-remote` | the header argument was split | `Authorization:Bearer tp_…`, no space after the colon |
 | A report compiles but the campaign shows nothing in the webapp | you are signed into the webapp as a different user | reports and their campaigns belong to the key's owner |

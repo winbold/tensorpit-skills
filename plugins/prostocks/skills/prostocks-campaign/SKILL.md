@@ -151,6 +151,11 @@ The report is prose, and TensorPit's own compiler turns it into the plan. This i
    answers with the compile's next steps — each round, its reasoning as it streams, the checks —
    waiting up to 25 s for them, the new `cursor` to pass back, and the same `view`
    `get_compilation` gives. Narrate what moves; the rules below are the same.
+   ⛔ A compile can take several rounds and each one costs. If the user asks you to stop, or says
+   it is taking too long, call `cancel_compilation { strategy_id }` — it cuts the model call in
+   flight so nothing more is spent. Say what it is: the report is kept and a revision compiles it
+   again. ⛔ Never stop one they did not ask you to stop, and never offer it as the first move on a
+   compile that is simply still running.
 3. `corrections_required` → fix what `issues` names and nothing else. Each issue carries a
    **code**, a **pointer** into the strategy, the **problem** and what is **expected** — yours to act
    on — and the same finding for the person: **plain**, the report **section** it is in and the
